@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:weather_app/models/weather.dart';
-import 'package:weather_app/providers/weather_provider.dart';
-import 'package:weather_app/services/weather_services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:weather_app/cubits/weeather/weather_cubit.dart';
 
 class SearchPage extends StatelessWidget {
   SearchPage({Key? key, this.cityName}) : super(key: key);
@@ -46,14 +44,9 @@ class SearchPage extends StatelessWidget {
             TextField(
               onSubmitted: (data) async {
                 cityName = data;
-                WeatherService service = WeatherService();
-                WeatherModel weather =
-                    await service.getWeather(cityName: cityName!);
-                Provider.of<WeatherProvider>(context, listen: false)
-                    .setWeatherData = weather;
-                Provider.of<WeatherProvider>(context, listen: false).cityName =
-                    cityName;
-                Navigator.pop(context);
+                BlocProvider.of<WeatherCubit>(context).getWeather(cityName: cityName!);
+                BlocProvider.of<WeatherCubit>(context).cityName = cityName;
+                 Navigator.pop(context);
               },
               decoration: InputDecoration(
                 alignLabelWithHint: true,
@@ -65,14 +58,14 @@ class SearchPage extends StatelessWidget {
                 ),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(30.0),
-                  borderSide: BorderSide(
+                  borderSide: const BorderSide(
                     width: 2.0,
                     color: Colors.brown,
                   ),
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(30.0),
-                  borderSide: BorderSide(
+                  borderSide: const BorderSide(
                     width: 1.0,
                     color: Colors.brown,
                   ),

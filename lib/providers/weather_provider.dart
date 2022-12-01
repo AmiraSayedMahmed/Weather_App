@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:provider/provider.dart';
 import 'package:weather_app/models/weather.dart';
 
 class WeatherProvider extends ChangeNotifier{
